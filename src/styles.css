@@ -1,0 +1,116 @@
+html,
+body {
+    background-color: #181818;
+    color: white;
+}
+
+pre {
+    white-space: pre-line;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+hr {
+    border-color: grey;
+    margin: 0%;
+}
+
+.grey {
+    color: grey;
+}
+
+.white {
+    color: white;
+}
+
+.blue {
+    color: #3EA6FF;
+}
+
+.center {
+    text-align: center;
+}
+
+/* scroll bar */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: black;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #5c5c5c;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(133, 133, 133);
+}
+
+/* video */
+
+.thumbnail {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* navbar */
+
+.nav-bar {
+    padding-right: 20px;
+    display: flex;
+    background-color: #202020;
+    color: white;
+}
+
+.nav-bar-brand {
+    display: flex;
+    padding-top: 11px;
+    font-weight: bolder;
+}
+
+.drawer {
+    background-color: #202020;
+    color: white;
+}
+
+.menu_item:hover {
+    color: rgba(255, 255, 255, 0.882);
+}
+
+/* new vid */
+
+.box {
+    border: 1px solid grey;
+    padding: 5px;
+}
+
+/* channel */
+
+.channel-bg {
+    background-image: url("https://picsum.photos/3000");
+    height: 300px;
+    width: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-position-y: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 20px;
+}
+
+.channel-info {
+    padding: 2px;
+    background-color: #202020;
+    border-radius: 5px;
+}
