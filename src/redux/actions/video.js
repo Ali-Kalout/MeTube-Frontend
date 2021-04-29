@@ -1,9 +1,9 @@
 import * as ActionTypes from "./../ActionTypes";
 import * as api from "./../../api/index";
 
-export const getVideos = () => async (dispatch) => {
+export const getVideos = p => async (dispatch) => {
     try {
-        const { data } = await api.getVideos();
+        const { data } = await api.getVideos(p);
 
         dispatch({
             type: ActionTypes.GETVIDEOS,

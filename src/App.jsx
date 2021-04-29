@@ -18,7 +18,7 @@ const App = () => {
     const dispatch = useDispatch();
     const vids = useSelector(state => state.videos);
 
-    useEffect(() => dispatch(getVideos()), []);
+    useEffect(() => dispatch(getVideos(1)), []);
 
     return (
         <>

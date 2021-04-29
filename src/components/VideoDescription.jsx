@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import millify from "millify";
 import { Grid, Avatar, Typography, Button } from "@material-ui/core";
+import Linkify from 'react-linkify';
 
 const VideoDescription = ({ currentVideo }) => {
     const [more, setMore] = useState(false);
@@ -20,26 +21,28 @@ const VideoDescription = ({ currentVideo }) => {
                     <Typography variant="subtitle2" className="grey" style={{ marginTop: "-5px" }}>
                         {millify(0, { precision: 1 })} subscribers
                     </Typography>
-                    {currentVideo?.video?.description?.length > 180 ?
-                        <>
-                            <pre className="white mt-3">
-                                {!more ?
-                                    <>
-                                        {currentVideo?.video?.description?.substring(0, 180) + " ..."}
-                                    </>
-                                    :
-                                    <>
-                                        {currentVideo?.video?.description}
-                                    </>
-                                }
-                            </pre>
-                            <Button style={{ marginTop: "-15px" }} onClick={() => setMore(!more)}>
-                                <b className="grey">SHOW {!more ? "MORE" : "LESS"}</b>
-                            </Button>
-                        </>
-                        :
-                        <pre className="white mt-3">{currentVideo?.video?.description}</pre>
-                    }
+                    <Linkify properties={{ target: '_blank', style: { color: 'blue' } }}>
+                        {currentVideo?.video?.description?.length > 180 ?
+                            <>
+                                <pre className="white mt-3">
+                                    {!more ?
+                                        <>
+                                            {currentVideo?.video?.description?.substring(0, 180) + " ..."}
+                                        </>
+                                        :
+                                        <>
+                                            {currentVideo?.video?.description}
+                                        </>
+                                    }
+                                </pre>
+                                <Button style={{ marginTop: "-15px" }} onClick={() => setMore(!more)}>
+                                    <b className="grey">SHOW {!more ? "MORE" : "LESS"}</b>
+                                </Button>
+                            </>
+                            :
+                            <pre className="white mt-3">{currentVideo?.video?.description}</pre>
+                        }
+                    </Linkify>
                 </Grid>
             </Grid>
             <hr />

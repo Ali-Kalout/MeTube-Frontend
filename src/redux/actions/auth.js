@@ -14,3 +14,13 @@ export const auth = (userData, token, history) => async (dispatch) => {
         console.log(error);
     }
 }
+
+export const subscribe = id => async dispatch => {
+    try {
+        const { data } = await api.subscribe(id);
+
+        console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+}

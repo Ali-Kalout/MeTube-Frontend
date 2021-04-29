@@ -104,6 +104,7 @@ export default function DropDown({ profile }) {
                                         <MenuItem className="menu_item" onClick={() => {
                                             setOpen(false);
                                             history.push(`/channel/${profile?._id}`);
+                                            window.location.reload();
                                         }}>
                                             <AccountBoxIcon fontSize="default" />&nbsp;
                                             Your Channel

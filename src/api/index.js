@@ -12,14 +12,15 @@ API.interceptors.request.use(req => {
     return req;
 });
 
-// authorization
+// channel
 
-export const auth = profile => API.post("/signin", profile);
+export const auth = profile => API.post("/channel", profile);
+export const subscribe = id => API.post(`/channel/subscribe/${id}`);
 
 // video
 
 export const uploadVideo = vid => API.post("/video", vid);
-export const getVideos = () => API.get("/video");
+export const getVideos = p => API.get(`/video?page=${p}`);
 export const addView = id => API.post(`/video/${id}`);
 export const likeVideo = id => API.post(`/video/${id}/like`);
 export const dislikeVideo = id => API.post(`/video/${id}/dislike`);

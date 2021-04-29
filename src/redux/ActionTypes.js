@@ -1,5 +1,6 @@
 export const AUTH = "AUTH";
 export const LOGOUT = "LOGOUT";
+export const SUBSCRIBE = "SUBSCRIBE";
 
 export const UPLOADVIDEO = "UPLOADVIDEO";
 export const GETVIDEOS = "GETVIDEOS";
