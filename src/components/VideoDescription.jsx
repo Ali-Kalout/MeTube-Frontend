@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import millify from "millify";
 import { Grid, Avatar, Typography, Button } from "@material-ui/core";
 import Linkify from 'react-linkify';
 
@@ -19,7 +18,7 @@ const VideoDescription = ({ currentVideo }) => {
                         {currentVideo?.creator?.name}
                     </Typography>
                     <Typography variant="subtitle2" className="grey" style={{ marginTop: "-5px" }}>
-                        {millify(0, { precision: 1 })} subscribers
+                        {currentVideo?.creator?.subscribers?.length} subscribers
                     </Typography>
                     <Linkify properties={{ target: '_blank', style: { color: 'blue' } }}>
                         {currentVideo?.video?.description?.length > 180 ?

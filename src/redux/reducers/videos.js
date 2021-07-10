@@ -4,6 +4,9 @@ export const VIDEOS = (videos = [], action) => {
     switch (action.type) {
         case ActionTypes.GETVIDEOS:
             return action.payload;
+            
+        case ActionTypes.GETBYSEARCH:
+            return action.payload;
 
         case ActionTypes.LIKEVIDEO:
         case ActionTypes.DISLIKEVIDEO:

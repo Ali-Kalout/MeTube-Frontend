@@ -67,10 +67,17 @@ const Navbar = () => {
 
     const Nav = d => (
         <div className="nav-bar">
-            <IconButton color="inherit" className="pointer" onClick={toggle} id="toggle">
-                <MenuIcon fontSize="large" />
-            </IconButton>
-            <div className="nav-bar-brand pointer" onClick={() => history.push("/")}>
+            {profile ? (
+                <IconButton color="inherit" className="pointer" onClick={toggle} id="toggle">
+                    <MenuIcon fontSize="large" />
+                </IconButton>
+            ) : (
+                <div className="ml-5"></div>
+            )}
+            <div className="nav-bar-brand pointer" onClick={() => {
+                history.push("/");
+                window.location.reload();
+            }}>
                 <YouTubeIcon fontSize="large" />
                 <h3>&nbsp;MeTube</h3>
             </div>

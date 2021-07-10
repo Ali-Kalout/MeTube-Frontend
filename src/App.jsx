@@ -15,6 +15,7 @@ import NewVid from "./pages/NewVid";
 import Channel from "./pages/Channel";
 
 const App = () => {
+    const profile = localStorage.getItem("MYProfile");
     const dispatch = useDispatch();
     const vids = useSelector(state => state.videos);
 
@@ -30,12 +31,14 @@ const App = () => {
             <Container maxWidth="lg">
                 <Switch>
                     <Route exact path="/" component={() => <Home vids={vids} />} />
+                    <Route exact path="/search" component={() => <Home vids={vids} />} /> {/* ?searchQuery
+                        after searching the searched videos will be in normal videos place */}
                     <Route exact path="/channel/:id" component={Channel} />
                     <Route exact path="/watch/:id" component={({ match }) => {
                         const vid = vids.filter(v => String(match.params.id) === String(v?.video?._id))[0];
                         return <Watch vid={vid?.video} />;
                     }} />
-                    <Route exact path="/new" component={NewVid} />
+                    <Route exact path="/new" component={() => (profile ? <NewVid /> : <Redirect to="/" />)} />
 
                     <Redirect to="/" />
                 </Switch>

@@ -38,6 +38,11 @@ hr {
     text-align: center;
 }
 
+.paginatePaper {
+    width: 50%;
+    margin: 10px auto;
+}
+
 /* scroll bar */
 
 ::-webkit-scrollbar {

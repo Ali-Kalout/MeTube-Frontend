@@ -1,4 +1,5 @@
 const checkVideo = vid => {
+    console.log(vid.selectedFile.length);
     if (vid.title.length === 0 || vid.description.length === 0 ||
         vid.thumbnail.length === 0 || vid.selectedFile.length === 0 || vid.tags.length === 0) {
         return "Plz fill all fields !";

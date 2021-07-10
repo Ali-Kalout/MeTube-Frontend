@@ -14,6 +14,19 @@ export const getVideos = p => async (dispatch) => {
     }
 }
 
+export const getVideoBySearch = (searchQuery) => async (dispatch) => {
+    try {
+        const { data } = await api.fetchVideoBySearch(searchQuery);
+
+        dispatch({
+            type: ActionTypes.GETBYSEARCH,
+            payload: data
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const likeVideo = id => async (dispatch) => {
     try {
         const { data } = await api.likeVideo(id);

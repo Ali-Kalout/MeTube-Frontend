@@ -12,14 +12,17 @@ const Channel = () => {
     const location = useLocation();
     const [channel, setChannel] = useState({});
     const dispatch = useDispatch();
+    const [isSub, setIsSub] = useState();
 
     useEffect(() => axios.get(`${url}/search/channel/${location.pathname.substring(9)}`)
         .then(({ data }) => setChannel(data)), []
     );
 
+    useEffect(() => setIsSub(channel?.channel?.subscribers.findIndex(id => id === user?._id) === -1 ? false : true), [channel]);
+
     const sub = () => {
+        setIsSub(!isSub);
         dispatch(subscribe(channel?.channel?._id));
-        window.location.reload();
     }
 
     return (
@@ -38,7 +41,7 @@ const Channel = () => {
                 </Grid>
                 {(user && channel?.channel?.googleId !== user?.googleId) && (
                     <Grid item xs={4} md={2}>
-                        {channel?.channel?.subscribers.findIndex(id => id === user?._id) === -1 ?
+                        {!isSub ?
                             <Button color="primary" onClick={sub} className="mt-2" variant="contained">SUBSCRIBE</Button>
                             :
                             <Button color="inherit" onClick={sub} className="mt-2" variant="outlined">UNSUBSCRIBE</Button>
