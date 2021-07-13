@@ -15,7 +15,7 @@ const VideoRecommend = ({ video, channel, search }) => {
     return (
         <Grid container spacing={2} className="mb-2 mt-1">
             <Grid xs={5}>
-                <img src={video?.thumbnail} className="pointer" onClick={chooseVid} width={!search && "168"}
+                <img alt="" src={video?.thumbnail} className="pointer" onClick={chooseVid} width={!search && "168"}
                     height={!search && "100"} />
             </Grid>
             <Grid item xs={7}>

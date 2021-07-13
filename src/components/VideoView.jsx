@@ -14,9 +14,9 @@ const VideoView = ({ video, edit, channelView }) => {
             <Grow in className={!edit && "mt-3"}>
                 <Grid item lg={!edit && 3} md={!edit && 4} sm={!edit && 6}>
                     {edit ? (
-                        <img width="100%" height="300" loading="lazy" src={video?.thumbnail} className="thumbnail" />
+                        <img alt="" width="100%" height="300" loading="lazy" src={video?.thumbnail} className="thumbnail" />
                     ) : (
-                        <img width="300" height="200" src={channelView ? video?.thumbnail : video?.video?.thumbnail}
+                        <img alt="" width="300" height="200" src={channelView ? video?.thumbnail : video?.video?.thumbnail}
                             className="thumbnail pointer" onClick={handleChooseVideo} loading="lazy" />
                     )}
                     <div className="m-2"></div>

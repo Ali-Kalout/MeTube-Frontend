@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Container } from "@material-ui/core";
 import { ToastContainer } from "react-toastify";
-import { useSelector, useDispatch } from "react-redux";
-import { getVideos } from "./redux/actions/video";
 
 import "./styles.css";
 
@@ -16,28 +14,25 @@ import Channel from "./pages/Channel";
 
 const App = () => {
     const profile = localStorage.getItem("MYProfile");
-    const dispatch = useDispatch();
-    const vids = useSelector(state => state.videos);
-
-    useEffect(() => dispatch(getVideos(1)), []);
 
     return (
         <>
             <Navbar />
 
-            <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false}
-                closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover newestOnTop />
+            <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false}
+                newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
 
             <Container maxWidth="lg">
                 <Switch>
-                    <Route exact path="/" component={() => <Home vids={vids} />} />
-                    <Route exact path="/search" component={() => <Home vids={vids} />} /> {/* ?searchQuery
+                    <Route exact path="/" component={() => <Home/>} />
+                    <Route exact path="/search" component={() => <Home/>} /> {/* ?searchQuery
                         after searching the searched videos will be in normal videos place */}
                     <Route exact path="/channel/:id" component={Channel} />
-                    <Route exact path="/watch/:id" component={({ match }) => {
+                    {/* <Route exact path="/watch/:id" component={({ match }) => {
                         const vid = vids.filter(v => String(match.params.id) === String(v?.video?._id))[0];
                         return <Watch vid={vid?.video} />;
-                    }} />
+                    }} /> */}
+                    <Route exact path="/watch/:id" component={Watch} />
                     <Route exact path="/new" component={() => (profile ? <NewVid /> : <Redirect to="/" />)} />
 
                     <Redirect to="/" />

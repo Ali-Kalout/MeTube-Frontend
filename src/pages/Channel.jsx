@@ -13,14 +13,20 @@ const Channel = () => {
     const [channel, setChannel] = useState({});
     const dispatch = useDispatch();
     const [isSub, setIsSub] = useState();
+    const [subs, setSubs] = useState(0);
 
     useEffect(() => axios.get(`${url}/search/channel/${location.pathname.substring(9)}`)
         .then(({ data }) => setChannel(data)), []
     );
 
-    useEffect(() => setIsSub(channel?.channel?.subscribers.findIndex(id => id === user?._id) === -1 ? false : true), [channel]);
+    useEffect(() => {
+        setIsSub(channel?.channel?.subscribers.findIndex(id => id === user?._id) === -1 ? false : true);
+        setSubs(channel?.channel?.subscribers?.length);
+    }, [channel]);
 
     const sub = () => {
+        if (isSub) setSubs(subs - 1);
+        else setSubs(subs + 1);
         setIsSub(!isSub);
         dispatch(subscribe(channel?.channel?._id));
     }
@@ -36,7 +42,7 @@ const Channel = () => {
                 <Grid item xs={6} md={8}>
                     <h4>{channel?.channel?.name}</h4>
                     <Typography variant="body2" className="grey">
-                        <b>{channel?.channel?.subscribers?.length} subscribers</b>
+                        <b>{subs} subscribers</b>
                     </Typography>
                 </Grid>
                 {(user && channel?.channel?.googleId !== user?.googleId) && (

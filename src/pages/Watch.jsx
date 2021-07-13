@@ -2,29 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { Grid } from "@material-ui/core";
 import VideoWatch from "./../components/VideoWatch";
 import { addView } from "./../api/index";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { getVideo,getVideos } from "./../redux/actions/video";
+import { useLocation, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import VideoDescription from "./../components/VideoDescription";
 import VideoRecommend from "./../components/VideoRecommend";
-import axios from "axios";
-import { url } from "./../api/index";
 
-const Watch = ({ vid }) => {
-    const videos = useSelector(state => state.videos);
+const Watch = () => {
+    const dispatch = useDispatch();
+    const { videos, video: currentVideo } = useSelector(state => state.videos);
     const location = useLocation();
-    const [channel, setChannel] = useState([]);
-    const [currentVideo, setCurrentVideo] = useState(
-        videos.filter(v => v?.video?._id === location.pathname.substring(7) || v?.video?._id === vid?._id)[0]
-    );
-
-    // if not video get from server
+    const { id } = useParams();
 
     useEffect(() => {
-        if (typeof (currentVideo) === "undefined") axios.get(`${url}/search/watch/${location.pathname.substring(7)}`)
-            .then(({ data }) => setCurrentVideo(data));
-        axios.get(`${url}/search/channel/${currentVideo?.creator?._id}`).then(({ data }) => setChannel(data));
+        dispatch(getVideos(1));
+        dispatch(getVideo(id));
         addView(currentVideo?.video?._id);
-    }, []);
+    }, [id]);
 
     return (
         <>
@@ -32,31 +26,17 @@ const Watch = ({ vid }) => {
                 <Grid item xs={12} md={8}>
                     <VideoWatch currentVideo={currentVideo} />
                     <VideoDescription currentVideo={currentVideo} />
-                    {/* comments here */}
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    {channel?.videos?.length !== 1 ?
-                        <>
-                            <h5 style={{ marginLeft: "-10px" }}>More videos by {channel?.channel?.name}</h5>
-                            {channel?.videos?.map((v, i) => {
-                                if (v?._id !== currentVideo?.video?._id) return (
-                                    <span key={i}>
-                                        <VideoRecommend video={v} channel={channel?.channel} search={false} />
-                                    </span>
-                                );
-                            })}
-                        </> :
-                        <>
-                            <h5 style={{ marginLeft: "-10px" }}>Recommended videos</h5>
-                            {videos?.map((v, i) => {
-                                if (v?.video?._id !== currentVideo?.video?._id) return (
-                                    <span key={i}>
-                                        <VideoRecommend video={v?.video} channel={v?.creator} search={false} />
-                                    </span>
-                                );
-                            })}
-                        </>
-                    }
+                    <h5 style={{ marginLeft: "-10px",marginTop:"-5px" }}>More videos</h5>
+                    {videos?.map((v, i) => {
+                        if (v?.video?._id !== currentVideo?.video?._id) return (
+                            <span key={i}>
+                                <VideoRecommend video={v?.video} channel={v?.creator} search={false} />
+                            </span>
+                        );
+                    })}
+                    {videos.length <= 1 && <p>No recommended videos found !<br />Refresh to fetch more videos !</p>}
                 </Grid>
             </Grid>
         </>

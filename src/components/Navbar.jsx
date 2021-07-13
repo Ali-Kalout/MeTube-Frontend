@@ -79,7 +79,7 @@ const Navbar = () => {
                 window.location.reload();
             }}>
                 <YouTubeIcon fontSize="large" />
-                <h3>&nbsp;MeTube</h3>
+                <h3 id="name">&nbsp;MeTube</h3>
             </div>
             {profile ? (
                 <>
