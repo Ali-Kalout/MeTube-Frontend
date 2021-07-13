@@ -18,12 +18,14 @@ const VideoInfo = ({ currentVideo }) => {
     const [dislikes, setDislikes] = useState(0);
 
     useEffect(() => {
-        if (currentVideo?.video?.dislikes?.findIndex(id => id === user?.googleId) !== -1) setDislike(true);
-        if (currentVideo?.video?.likes?.findIndex(id => id === user?.googleId) !== -1) setLike(true);
-        setLikes(currentVideo?.video?.likes?.length);
-        setDislikes(currentVideo?.video?.dislikes?.length);
-    });
-    
+        if (currentVideo) {
+            if (currentVideo?.video?.dislikes?.findIndex(id => id === user?.googleId) !== -1) setDislike(true);
+            if (currentVideo?.video?.likes?.findIndex(id => id === user?.googleId) !== -1) setLike(true);
+            setLikes(currentVideo?.video?.likes?.length);
+            setDislikes(currentVideo?.video?.dislikes?.length);
+        }
+    }, [currentVideo]);
+
     const likeV = () => {
         if (!like) {
             if (dislike) {
@@ -37,8 +39,9 @@ const VideoInfo = ({ currentVideo }) => {
             setLike(false);
         }
         dispatch(likeVideo(currentVideo?.video?._id));
+        console.log(likes);
     }
-    
+
     const dislikeV = () => {
         if (!dislike) {
             if (like) {
