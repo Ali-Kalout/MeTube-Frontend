@@ -71,6 +71,13 @@ hr {
 
 /* navbar */
 
+#search {
+    height: 8px;
+    caret-color: white;
+    color: white;
+    background-color: #5b5b5b;
+}
+
 .nav-bar {
     padding-right: 20px;
     display: flex;

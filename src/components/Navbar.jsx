@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Drawer, makeStyles, IconButton, Button, Divider, AppBar, Typography, Tooltip, Avatar } from "@material-ui/core";
+import {
+    Drawer, makeStyles, IconButton, Button, Divider, Paper, TextField, Tooltip
+} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import { useHistory, useLocation, Link } from "react-router-dom";
@@ -9,11 +11,10 @@ import { useDispatch } from "react-redux";
 import DropDown from "./DropDown";
 import decode from "jwt-decode";
 import { auth } from "./../redux/actions/auth";
+import SearchIcon from '@material-ui/icons/Search';
+import { getVideoBySearch } from "./../redux/actions/video";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        // display: "flex"
-    },
+const useStyles = makeStyles(theme => ({
     drawer: {
         width: 240,
         flexShrink: 0
@@ -34,7 +35,9 @@ const Navbar = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const classes = useStyles();
+    const [search, setSearch] = useState("");
     const [openDrawer, setOpenDrawer] = useState(false);
+    const [searchApper, setSearchApper] = useState(false);
     const [profile, setProfile] = useState(JSON.parse(localStorage.getItem("MYProfile"))?.profile);
 
     const toggle = () => setOpenDrawer(!openDrawer);
@@ -65,26 +68,51 @@ const Navbar = () => {
         }
     }
 
-    const Nav = d => (
-        <div className="nav-bar">
-            {profile ? (
-                <IconButton color="inherit" className="pointer" onClick={toggle} id="toggle">
-                    <MenuIcon fontSize="large" />
-                </IconButton>
-            ) : (
-                <div className="ml-5"></div>
-            )}
-            <div className="nav-bar-brand pointer" onClick={() => {
-                history.push("/");
-                window.location.reload();
-            }}>
-                <YouTubeIcon fontSize="large" />
-                <h3 id="name">&nbsp;MeTube</h3>
-            </div>
-            {profile ? (
-                <>
-                    {!d.d && (
+    const HandleKeyPress = e => e.charCode === 13 && searchVideo();
+
+    const searchVideo = () => {
+        if (search.trim()) {
+            dispatch(getVideoBySearch(search));
+            history.push(`/search?searchQuery=${search}`);
+        }
+        else history.push("/");
+    };
+
+    return (
+        <div className={classes.root} style={{ marginBottom: "10px" }}>
+            <div className="nav-bar">
+                {profile ? (
+                    <IconButton color="inherit" className="pointer" onClick={toggle} id="toggle">
+                        <MenuIcon fontSize="large" />
+                    </IconButton>
+                ) : (
+                    <div className="ml-5"></div>
+                )}
+                <div className="nav-bar-brand pointer" onClick={() => {
+                    history.push("/");
+                    window.location.reload();
+                }}>
+                    <YouTubeIcon fontSize="large" />
+                    <h3 id="name">&nbsp;MeTube</h3>
+                </div>
+                {profile ? (
+                    <>
                         <div className="ml-auto mt-2 pointer" style={{ display: "flex" }}>
+                            {searchApper && (
+                                <TextField
+                                    id="search"
+                                    variant="outlined"
+                                    value={search}
+                                    onChange={e => setSearch(e.target.value)}
+                                    onKeyPress={HandleKeyPress}
+                                />
+                            )}
+                            <IconButton color="inherit" style={{ marginTop: "-10px", marginRight: "-7px" }} onClick={() => {
+                                if (searchApper) searchVideo();
+                                else setSearchApper(!searchApper);
+                            }}>
+                                <SearchIcon fontSize="large" />
+                            </IconButton>
                             <IconButton color="inherit" style={{ marginTop: "-10px", marginRight: "5px" }} component={Link} to="/new">
                                 <VideoCallIcon fontSize="large" />
                             </IconButton>
@@ -92,11 +120,24 @@ const Navbar = () => {
                                 <DropDown profile={profile} />
                             </Tooltip>
                         </div>
-                    )}
-                </>
-            ) : (
-                <>
-                    {!d.d && (
+                    </>
+                ) : (
+                    <>
+                        {searchApper && (
+                            <TextField
+                                id="search"
+                                variant="outlined"
+                                value={search}
+                                onChange={e => setSearch(e.target.value)}
+                                onKeyPress={HandleKeyPress}
+                            />
+                        )}
+                        <IconButton color="inherit" style={{ marginTop: "-10px", marginRight: "-7px" }} onClick={() => {
+                            if (searchApper) searchVideo();
+                            else setSearchApper(!searchApper);
+                        }}>
+                            <SearchIcon fontSize="large" />
+                        </IconButton>
                         <GoogleLogin
                             clientId="988730621859-o3nt4dig01ja29nifuvavl678cbnarp4.apps.googleusercontent.com"
                             render={(renderProps) => (
@@ -109,26 +150,34 @@ const Navbar = () => {
                             onFailure={googleRes}
                             cookiePolicy="single_host_origin"
                         />
-                    )}
-                </>
-            )}
-        </div>
-    );
-
-    return (
-        <div className={classes.root} style={{ marginBottom: "10px" }}>
-            <Nav d={false} />
+                    </>
+                )}
+            </div>
             <Drawer
                 variant="persistent"
                 anchor="left"
                 open={openDrawer}
             >
-                <Nav d={true} />
+                <div className="nav-bar">
+                    {profile ? (
+                        <IconButton color="inherit" className="pointer" onClick={toggle} id="toggle">
+                            <MenuIcon fontSize="large" />
+                        </IconButton>
+                    ) : (
+                        <div className="ml-5"></div>
+                    )}
+                    <div className="nav-bar-brand pointer" onClick={() => {
+                        history.push("/");
+                        window.location.reload();
+                    }}>
+                        <YouTubeIcon fontSize="large" />
+                        <h3 id="name">&nbsp;MeTube</h3>
+                    </div>
+                </div>
                 <Divider />
-                hi
             </Drawer>
         </div>
-    )
+    );
 }
 
 export default Navbar;
