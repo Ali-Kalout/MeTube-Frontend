@@ -32,15 +32,12 @@ export const getVideos = p => async (dispatch) => {
 
 export const getVideoBySearch = (searchQuery) => async (dispatch) => {
     try {
-        dispatch({ type: ActionTypes.STARTLOADING });
         const { data } = await api.fetchVideoBySearch(searchQuery);
 
         dispatch({
             type: ActionTypes.GETBYSEARCH,
             payload: data
         });
-
-        dispatch({ type: ActionTypes.ENDLOADING });
     } catch (error) {
         console.log(error);
     }

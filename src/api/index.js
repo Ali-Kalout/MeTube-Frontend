@@ -22,7 +22,7 @@ export const subscribe = id => API.post(`/channel/subscribe/${id}`);
 export const getVideo = id => API.get(`/video/${id}`);
 export const uploadVideo = vid => API.post("/video", vid);
 export const getVideos = p => API.get(`/video?page=${p}`);
-export const fetchVideoBySearch = searchQuery => API.get(`/video/search?searchQuery=${searchQuery || ''}`);
+export const fetchVideoBySearch = searchQuery => API.get(`/video/search/${searchQuery}`);
 export const addView = id => API.post(`/video/${id}`);
 export const likeVideo = id => API.post(`/video/${id}/like`);
 export const dislikeVideo = id => API.post(`/video/${id}/dislike`);

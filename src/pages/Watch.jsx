@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Grid } from "@material-ui/core";
 import VideoWatch from "./../components/VideoWatch";
 import { addView } from "./../api/index";
 import { getVideo,getVideos } from "./../redux/actions/video";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import VideoDescription from "./../components/VideoDescription";
 import VideoRecommend from "./../components/VideoRecommend";
@@ -11,7 +11,6 @@ import VideoRecommend from "./../components/VideoRecommend";
 const Watch = () => {
     const dispatch = useDispatch();
     const { videos, video: currentVideo } = useSelector(state => state.videos);
-    const location = useLocation();
     const { id } = useParams();
 
     useEffect(() => {

@@ -25,13 +25,8 @@ const App = () => {
             <Container maxWidth="lg">
                 <Switch>
                     <Route exact path="/" component={() => <Home/>} />
-                    <Route exact path="/search" component={() => <Home/>} /> {/* ?searchQuery
-                        after searching the searched videos will be in normal videos place */}
+                    <Route exact path="/search" component={() => <Home/>} />
                     <Route exact path="/channel/:id" component={Channel} />
-                    {/* <Route exact path="/watch/:id" component={({ match }) => {
-                        const vid = vids.filter(v => String(match.params.id) === String(v?.video?._id))[0];
-                        return <Watch vid={vid?.video} />;
-                    }} /> */}
                     <Route exact path="/watch/:id" component={Watch} />
                     <Route exact path="/new" component={() => (profile ? <NewVid /> : <Redirect to="/" />)} />
 
