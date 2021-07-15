@@ -59,7 +59,10 @@ const Navbar = () => {
     }, [location]);
 
     const googleRes = res => {
-        if (res.error) alert('Google Sign In was unsuccessful. Try again later');
+        if (res.error) {
+            console.log(res.error);
+            alert('Google Sign In was unsuccessful. Try again later');
+        }
         else {
             const profile = res?.profileObj;
             const token = res?.tokenId;
@@ -123,33 +126,35 @@ const Navbar = () => {
                     </>
                 ) : (
                     <>
-                        {searchApper && (
-                            <TextField
-                                id="search"
-                                variant="outlined"
-                                value={search}
-                                onChange={e => setSearch(e.target.value)}
-                                onKeyPress={HandleKeyPress}
-                            />
-                        )}
-                        <IconButton color="inherit" style={{ marginTop: "-10px", marginRight: "-7px" }} onClick={() => {
-                            if (searchApper) searchVideo();
-                            else setSearchApper(!searchApper);
-                        }}>
-                            <SearchIcon fontSize="large" />
-                        </IconButton>
-                        <GoogleLogin
-                            clientId="988730621859-o3nt4dig01ja29nifuvavl678cbnarp4.apps.googleusercontent.com"
-                            render={(renderProps) => (
-                                <Button color="inherit" style={{ height: "45px" }} className="mt-2 ml-auto"
-                                    onClick={renderProps.onClick} startIcon={<Icon />} disabled={renderProps.disabled} variant="outlined">
-                                    Sign In
-                                </Button>
+                        <div className="ml-auto mt-2 pointer" style={{ display: "flex" }}>
+                            {searchApper && (
+                                <TextField
+                                    id="search"
+                                    variant="outlined"
+                                    value={search}
+                                    onChange={e => setSearch(e.target.value)}
+                                    onKeyPress={HandleKeyPress}
+                                />
                             )}
-                            onSuccess={googleRes}
-                            onFailure={googleRes}
-                            cookiePolicy="single_host_origin"
-                        />
+                            <IconButton color="inherit" style={{ marginTop: "-10px", marginRight: "-7px" }} onClick={() => {
+                                if (searchApper) searchVideo();
+                                else setSearchApper(!searchApper);
+                            }}>
+                                <SearchIcon fontSize="large" />
+                            </IconButton>
+                            <GoogleLogin
+                                clientId="988730621859-o3nt4dig01ja29nifuvavl678cbnarp4.apps.googleusercontent.com"
+                                render={(renderProps) => (
+                                    <Button color="inherit" style={{ height: "45px" }} className="ml-auto"
+                                        onClick={renderProps.onClick} startIcon={<Icon />} disabled={renderProps.disabled} variant="outlined">
+                                        Sign In
+                                    </Button>
+                                )}
+                                onSuccess={googleRes}
+                                onFailure={googleRes}
+                                cookiePolicy="single_host_origin"
+                            />
+                        </div>
                     </>
                 )}
             </div>
