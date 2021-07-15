@@ -19,6 +19,8 @@ export const subscribe = id => API.post(`/channel/subscribe/${id}`);
 
 // video
 
+export const getSubscriptions = id => API.get(`channel/${id}`);
+export const deleteVideo = id => API.delete(`/video/${id}`);
 export const getVideo = id => API.get(`/video/${id}`);
 export const uploadVideo = vid => API.post("/video", vid);
 export const getVideos = p => API.get(`/video?page=${p}`);

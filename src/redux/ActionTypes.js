@@ -5,6 +5,7 @@ export const SUBSCRIBE = "SUBSCRIBE";
 export const STARTLOADING = "STARTLOADING";
 export const ENDLOADING = "ENDLOADING";
 
+export const GETSUBSCRIPTIONS = "GETSUBSCRIPTIONS";
 export const UPLOADVIDEO = "UPLOADVIDEO";
 export const GETVIDEOS = "GETVIDEOS";
 export const GETVIDEO = "GETVIDEO";

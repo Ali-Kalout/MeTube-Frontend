@@ -100,6 +100,36 @@ hr {
     color: rgba(255, 255, 255, 0.882);
 }
 
+#del_video {
+    margin-top: 2px;
+    margin-left: -55px;
+}
+
+.sub_view {
+    display: flex;
+    color: white;
+    margin: 5px;
+    padding: 0;
+    padding-top: 5px;
+    width: 100%;
+}
+
+.sub_view img {
+    width: 35px;
+    height: 35px;
+}
+
+.sub_view p{
+    margin-top: 7.5px;
+    margin-left: 7.5px;
+    font-weight: 500;
+}
+
+.sub_view:hover {
+    cursor: pointer;
+    background-color: #5b5b5b;
+}
+
 /* new vid */
 
 .box {

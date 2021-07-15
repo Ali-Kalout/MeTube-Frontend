@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import {
-    Drawer, makeStyles, IconButton, Button, Divider, Paper, TextField, Tooltip
+    Drawer, makeStyles, IconButton, Button, TextField, Tooltip, Avatar
 } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 import { useHistory, useLocation, Link } from "react-router-dom";
 import VideoCallIcon from '@material-ui/icons/VideoCall';
 import GoogleLogin from 'react-google-login';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DropDown from "./DropDown";
 import decode from "jwt-decode";
 import { auth } from "./../redux/actions/auth";
+import { getSubscriptions } from "./../redux/actions/video";
 import SearchIcon from '@material-ui/icons/Search';
 import { getVideoBySearch } from "./../redux/actions/video";
 
@@ -35,12 +36,18 @@ const Navbar = () => {
     const history = useHistory();
     const dispatch = useDispatch();
     const classes = useStyles();
+    const subscriptions = useSelector(state => state?.videos?.subscriptions);
     const [search, setSearch] = useState("");
     const [openDrawer, setOpenDrawer] = useState(false);
     const [searchApper, setSearchApper] = useState(false);
     const [profile, setProfile] = useState(JSON.parse(localStorage.getItem("MYProfile"))?.profile);
 
     const toggle = () => setOpenDrawer(!openDrawer);
+
+    useEffect(() => {
+        if (profile)
+            dispatch(getSubscriptions(profile?._id));
+    }, []);
 
     useEffect(() => {
         if (localStorage.getItem("MYProfile")) {
@@ -179,7 +186,31 @@ const Navbar = () => {
                         <h3 id="name">&nbsp;MeTube</h3>
                     </div>
                 </div>
-                <Divider />
+                <div style={{ backgroundColor: "#181818", height: "100%" }}>
+                    <div className="ml-2 mr-4 mt-2">
+                        <h4 style={{ color: "#4D4D4D" }}>SUBSCRIPTIONS</h4>
+                        <hr className="grey" />
+                        {subscriptions?.map((s, i) => (
+                            <div key={i} className="sub_view" onClick={() => {
+                                history.push(`/channel/${s?._id}`);
+                                window.location.reload();
+                            }}>
+                                <Avatar src={s?.imageUrl} />
+                                <p>{s?.name?.substring(0, 20)}</p>
+                            </div>
+                        ))}
+                        <hr className="grey mt-5" />
+                        <div className="center">
+                            <small className="grey">
+                                Copyright &copy;
+                                <a href="https://ali-kalout.github.io/" target="_blank"
+                                    rel="noreferrer" className="grey">
+                                    &nbsp;Ali Kalout
+                                </a>
+                            </small>
+                        </div>
+                    </div>
+                </div>
             </Drawer>
         </div>
     );

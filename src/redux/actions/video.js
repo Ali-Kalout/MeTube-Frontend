@@ -1,6 +1,27 @@
 import * as ActionTypes from "./../ActionTypes";
 import * as api from "./../../api/index";
 
+export const getSubscriptions = id => async (dispatch) => {
+    try {
+        const { data } = await api.getSubscriptions(id);
+
+        dispatch({
+            type: ActionTypes.GETSUBSCRIPTIONS,
+            payload: data
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const deleteVideo = id => async (dispatch) => {
+    try {
+        await api.deleteVideo(id);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const getVideo = id => async (dispatch) => {
     try {
         const { data } = await api.getVideo(id);

@@ -1,11 +1,15 @@
 import React from 'react';
-import { Grid, Grow, Avatar, Typography } from "@material-ui/core";
+import { Grid, Grow, Avatar, Typography, IconButton } from "@material-ui/core";
 import moment from "moment";
 import millify from "millify";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { deleteVideo } from "./../redux/actions/video";
+import DeleteIcon from '@material-ui/icons/Delete';
 
-const VideoView = ({ video, edit, channelView }) => {
+const VideoView = ({ owner, video, edit, channelView }) => {
     const history = useHistory();
+    const dispatch = useDispatch();
 
     const handleChooseVideo = () => history.push(`/watch/${channelView ? video?._id : video?.video?._id}`);
 
@@ -14,10 +18,24 @@ const VideoView = ({ video, edit, channelView }) => {
             <Grow in className={!edit && "mt-3"}>
                 <Grid item lg={!edit && 3} md={!edit && 4} sm={!edit && 6}>
                     {edit ? (
-                        <img alt="" width="100%" height="300" loading="lazy" src={video?.thumbnail} className="thumbnail" />
+                        <>
+                            <img alt="" width="100%" height="300" loading="lazy" src={video?.thumbnail} className="thumbnail" />
+                        </>
                     ) : (
-                        <img alt="" width="300" height="200" src={channelView ? video?.thumbnail : video?.video?.thumbnail}
-                            className="thumbnail pointer" onClick={handleChooseVideo} loading="lazy" />
+                        <Grid container wrap="nowrap">
+                            <img alt="" width="300" height="200" src={channelView ? video?.thumbnail : video?.video?.thumbnail}
+                                className="thumbnail pointer" onClick={handleChooseVideo} loading="lazy" />
+                            {owner && (
+                                <div id="del_video">
+                                    <IconButton color="secondary" onClick={() => {
+                                        dispatch(deleteVideo(video?._id));
+                                        window.location.reload();
+                                    }}>
+                                        <DeleteIcon fontSize="large" />
+                                    </IconButton>
+                                </div>
+                            )}
+                        </Grid>
                     )}
                     <div className="m-2"></div>
                     <Grid container className="mb-1">

@@ -3,6 +3,7 @@ import * as ActionTypes from "./../ActionTypes";
 export const VIDEOS = (state = {
     isLoading: true,
     videos: [],
+    subscriptions: [],
     currentPage: Number,
     numberOfPages: Number
 }, action) => {
@@ -14,6 +15,9 @@ export const VIDEOS = (state = {
                 currentPage: action.payload.currentPage,
                 numberOfPages: action.payload.numberOfPages
             };
+
+        case ActionTypes.GETSUBSCRIPTIONS:
+            return { ...state, subscriptions: action.payload };
 
         case ActionTypes.GETBYSEARCH:
             return { ...state, videos: action.payload };

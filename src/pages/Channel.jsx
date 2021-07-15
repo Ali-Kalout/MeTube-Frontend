@@ -56,11 +56,16 @@ const Channel = () => {
                 )}
             </Grid>
             <div className="mt-1">
-                <Grid container>
+                <Grid container justify="center">
                     {typeof (channel?.videos) === "undefined" || channel?.videos?.length === 0 ? (
                         <Typography className="mt-3" variant="h5">This channel has no videos yet !</Typography>
                     ) : (
-                        channel?.videos?.map((v, i) => <VideoView video={v} channelView={true} key={i} />)
+                        channel?.videos?.map((v, i) => <VideoView
+                            owner={user?._id === channel?.channel?._id ? true : false}
+                            video={v}
+                            channelView={true}
+                            key={i}
+                        />)
                     )}
                 </Grid>
             </div>
