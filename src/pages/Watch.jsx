@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Grid } from "@material-ui/core";
 import VideoWatch from "./../components/VideoWatch";
 import { addView } from "./../api/index";
-import { getVideo,getVideos } from "./../redux/actions/video";
+import { getVideo, getVideos } from "./../redux/actions/video";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import VideoDescription from "./../components/VideoDescription";
@@ -16,7 +16,7 @@ const Watch = () => {
     useEffect(() => {
         dispatch(getVideos(1));
         dispatch(getVideo(id));
-        addView(currentVideo?.video?._id);
+        dispatch(addView(currentVideo?.video?._id));
     }, [id]);
 
     return (
@@ -27,7 +27,7 @@ const Watch = () => {
                     <VideoDescription currentVideo={currentVideo} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                    <h5 style={{ marginLeft: "-10px",marginTop:"-5px" }}>More videos</h5>
+                    <h5 style={{ marginLeft: "-10px", marginTop: "-5px" }}>More videos</h5>
                     {videos?.map((v, i) => {
                         if (v?.video?._id !== currentVideo?.video?._id) return (
                             <span key={i}>
