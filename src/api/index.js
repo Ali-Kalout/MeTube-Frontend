@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const url = 'http://localhost:5000';
+export const url = 'https://metubebackend.herokuapp.com';
 
 const API = axios.create({ baseURL: url });
 

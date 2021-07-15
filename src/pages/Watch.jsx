@@ -17,7 +17,8 @@ const Watch = () => {
 
     useEffect(() => {
         dispatch(getVideos(1));
-        dispatch(getVideo(id));
+        if (id)
+            dispatch(getVideo(id));
     }, [id]);
 
     return (
