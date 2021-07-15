@@ -13,10 +13,11 @@ const Watch = () => {
     const { videos, video: currentVideo } = useSelector(state => state.videos);
     const { id } = useParams();
 
+    useEffect(() => addView(currentVideo?.video?._id));
+
     useEffect(() => {
         dispatch(getVideos(1));
         dispatch(getVideo(id));
-        dispatch(addView(currentVideo?.video?._id));
     }, [id]);
 
     return (
